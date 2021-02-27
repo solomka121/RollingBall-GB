@@ -8,5 +8,13 @@ namespace RollingBall
         {
             Move();
         }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.tag == "Void")
+            {
+                StartRespawn();
+            }
+        }
     }
 }
