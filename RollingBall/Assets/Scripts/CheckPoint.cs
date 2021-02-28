@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RollingBall
 {
-    public class CheckPoint : MonoBehaviour
+    internal class CheckPoint : MonoBehaviour
     {
         [SerializeField] private bool _isActive = true;
         [SerializeField] private Material _disabled;

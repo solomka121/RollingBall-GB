@@ -2,7 +2,7 @@
 
 namespace RollingBall
 {
-    public class CameraController : MonoBehaviour
+    internal class CameraController : MonoBehaviour
     {
         [SerializeField] private Transform _followTarget;
         [SerializeField] private float speed;
