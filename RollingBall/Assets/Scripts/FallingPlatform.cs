@@ -9,11 +9,16 @@ namespace RollingBall
         [SerializeField] private float _timeToFall;
         [SerializeField] private Vector3 _shrinkSize;
         [SerializeField] private GameObject _timerCube;
+        [SerializeField] private float _timeToRecover = 5;
         private Rigidbody _rigidbody;
+        private Vector3 _timerScale;
+        private Vector3 startPosition;
 
         private void Start()
         {
             _rigidbody = GetComponent<Rigidbody>();
+            startPosition = transform.position;
+            _timerScale = _timerCube.transform.localScale;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -21,17 +26,21 @@ namespace RollingBall
             if (other.tag == "Player")
             {
                 StartCoroutine(Fall());
-                LeanTween.scale(_timerCube, _timerCube.transform.localScale - _shrinkSize, _timeToFall).setEaseLinear();
             }
         }
 
         private IEnumerator Fall()
         {
+            LeanTween.scale(_timerCube, _timerCube.transform.localScale - _shrinkSize, _timeToFall).setEaseLinear();
             yield return new WaitForSeconds(_timeToFall);
             _rigidbody.isKinematic = false;
             _rigidbody.AddForce(Vector3.down, ForceMode.Impulse);
-            Destroy(gameObject, 5f);
+            yield return new WaitForSeconds(_timeToRecover);
+            _rigidbody.isKinematic = true;
+            _timerCube.transform.localScale = _timerScale;
+            transform.position = startPosition;
         }
+
 
     }
 }

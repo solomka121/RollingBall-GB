@@ -45,10 +45,10 @@ namespace RollingBall
         protected void StartRespawn()
         {
             _cameraController.ChangeFollowTarget(_lastCheckPoint);
-            StartCoroutine(DownUpSize());
+            StartCoroutine(Respawn());
             
         }
-        private IEnumerator DownUpSize()
+        private IEnumerator Respawn()
         {
             while (transform.localScale != Vector3.zero)
             {
@@ -70,8 +70,38 @@ namespace RollingBall
                 yield return new WaitForFixedUpdate();
             }
             transform.localScale = startScale;
-            StopCoroutine(DownUpSize());
+            StopCoroutine(Respawn());
+        }
 
+        public void StartTeleport()
+        {
+            _cameraController.ChangeFollowTarget(_lastCheckPoint);
+            StartCoroutine(Teleport());
+
+        }
+        private IEnumerator Teleport()
+        {
+            while (transform.localScale != Vector3.zero)
+            {
+                float step = 0.05f;
+                transform.localScale -= new Vector3(step, step, step);
+                step *= 1.4f;
+                yield return new WaitForFixedUpdate();
+            }
+
+            transform.position = _lastCheckPoint.position;
+            _rigidbody.velocity = Vector3.zero;
+            _cameraController.ChangeFollowTarget(transform);
+
+            while (transform.localScale != startScale)
+            {
+                float step = 0.05f;
+                transform.localScale += new Vector3(step, step, step);
+                step *= 1.4f;
+                yield return new WaitForFixedUpdate();
+            }
+            transform.localScale = startScale;
+            StopCoroutine(Teleport());
         }
 
 
