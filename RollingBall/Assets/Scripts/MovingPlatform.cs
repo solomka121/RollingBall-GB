@@ -18,7 +18,7 @@ namespace RollingBall
 
         private void Move()
         {
-            LeanTween.moveLocalZ(gameObject, transform.position.z + _moveAmount.z, _moveTime).setLoopType(_moveCurve);
+            LeanTween.move(gameObject, transform.position + _moveAmount , _moveTime).setLoopType(_moveCurve);
         }
 
         private void OnTriggerEnter(Collider other)
