@@ -5,6 +5,15 @@ TagManager:
   serializedVersion: 2
   tags:
   - Void
+  - Water
+  - Ice
+  - Boost
+  - WallSlide
+  - Grass
+  - Ledge
+  - Honey
+  - Mud
+  - Ground
   layers:
   - Default
   - TransparentFX
