@@ -35,6 +35,7 @@ namespace RollingBall
                 Vector3 movementDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 _rigidbody.AddForce(movementDirection * Speed);
             }
+
         }
 
         public void ChangeCheckPoint(Transform checkPoint)
