@@ -2323,7 +2323,7 @@ Rigidbody:
   m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!1001 &773077072
@@ -3144,8 +3144,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _followTarget: {fileID: 769873196}
-  rotationSpeed: 0
-  _speed: 0.04
+  rotationSpeed: 2
+  _speed: 0.08
   shake: 0
   isWallRunning: 0
   cameraTiltZ: 0

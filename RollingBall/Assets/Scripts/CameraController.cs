@@ -7,38 +7,42 @@ namespace RollingBall
     {
         [SerializeField] private Transform _followTarget;
         [SerializeField] private float rotationSpeed = 5;
-        private Vector3 smoothFollowTarget;
         [SerializeField] private float _speed = 0.08f;
         [SerializeField] private bool shake;
         private Vector3 _smoothedPlayerPosition;
         private Vector3 _offset;
-        private Vector3 cameraRotation;
 
         //      WALL RUN
         public bool isWallRunning;
         public float cameraTiltZ;
-        //
+        
         private float cameraTilt; 
+        //
 
         private void Start()
         {
             Cursor.visible = false;
 
             _offset = transform.position - _followTarget.position;
-            cameraRotation = transform.rotation.eulerAngles;
         }
 
         private void LateUpdate()
         {
+            #region Mouse Rotate
+
             Quaternion camTurnAnlge = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * rotationSpeed, Vector3.up);
-            _offset = camTurnAnlge * _offset;
-            Vector3 newPos = _followTarget.position + _offset;
+            Quaternion camTurnAnlgeX = Quaternion.AngleAxis(Input.GetAxis("Mouse Y") * rotationSpeed, Vector3.right);
+            _offset = camTurnAnlge * camTurnAnlgeX * _offset;
+
+            #endregion
+
+            #region Position Change
 
             _smoothedPlayerPosition = Vector3.Slerp(_smoothedPlayerPosition, _followTarget.position, _speed);
             transform.position = _smoothedPlayerPosition + _offset;
+            transform.LookAt(_followTarget.position);
 
-            smoothFollowTarget = Vector3.Slerp(smoothFollowTarget , _followTarget.position , 0.08f);
-            transform.LookAt(smoothFollowTarget);
+            #endregion
         }
 
         private void FixedUpdate()
