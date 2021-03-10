@@ -12,12 +12,12 @@ namespace RollingBall
         private Vector3 _smoothedPlayerPosition;
         private Vector3 _offset;
 
-        //      WALL RUN
+    /*    //      WALL RUN
         public bool isWallRunning;
         public float cameraTiltZ;
         
         private float cameraTilt; 
-        //
+        //*/
 
         private void Start()
         {
@@ -40,7 +40,7 @@ namespace RollingBall
 
             _smoothedPlayerPosition = Vector3.Slerp(_smoothedPlayerPosition, _followTarget.position, _speed);
             transform.position = _smoothedPlayerPosition + _offset;
-            transform.LookAt(_followTarget.position);
+            //transform.LookAt(_followTarget.position);
 
             #endregion
         }

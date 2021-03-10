@@ -33,7 +33,7 @@ namespace RollingBall
                 float targetAngle = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg + camera.eulerAngles.y;
 
                 Vector3 movementDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                _rigidbody.velocity = new Vector3(Mathf.Clamp(_rigidbody.velocity.x, -1, 1) , 0 , Mathf.Infinity), 0 , Mathf.Clamp(_rigidbody.velocity.z, -1, 1));
+                //_rigidbody.velocity = new Vector3(Mathf.Clamp(_rigidbody.velocity.x, -1, 1) , 0 , Mathf.Infinity), 0 , Mathf.Clamp(_rigidbody.velocity.z, -1, 1));
                 _rigidbody.AddForce(movementDirection * Speed);
             }
 
@@ -105,8 +105,8 @@ namespace RollingBall
             transform.localScale = startScale;
             StopCoroutine(Teleport());
         }
-
-
     }
+
+    
 
 }
