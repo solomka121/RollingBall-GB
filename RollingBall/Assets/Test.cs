@@ -23,7 +23,8 @@ public class Test : MonoBehaviour
         if (IsPushing)
         {
             transform.position += new Vector3( 0 , 0, amount);
+     
         }
-
+            
     }
 }
