@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace RollingBall
 {
-    public interface IFly
+    public interface IFlicker
     {
-        void Fly();
+        void Flicker();
     }
 }

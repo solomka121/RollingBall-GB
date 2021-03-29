@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace RollingBall
 {
-    public interface IFly
+    public interface IRotate
     {
-        void Fly();
+        void Rotate();
     }
 }

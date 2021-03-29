@@ -3,22 +3,25 @@ using System.Collections;
 
 namespace RollingBall
 {
-    internal class Player : MonoBehaviour
+    public class Player : MonoBehaviour
     {
         public Transform camera;
         private CameraController _cameraController;
 
-        public float Speed = 3.0f;
+        [SerializeField] private float Speed = 3.0f;
         private Rigidbody _rigidbody;
         private Transform _lastCheckPoint { get; set; }
 
         private Vector3 startScale;
+        public Player (CameraController cameraController)
+        {
+            _cameraController = cameraController;
+        }
 
 
         private void Start()
         {
             _rigidbody = GetComponent<Rigidbody>();
-            _cameraController = camera.GetComponent<CameraController>();
             startScale = transform.localScale;
         }
 
@@ -33,7 +36,6 @@ namespace RollingBall
                 float targetAngle = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg + camera.eulerAngles.y;
 
                 Vector3 movementDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                //_rigidbody.velocity = new Vector3(Mathf.Clamp(_rigidbody.velocity.x, -1, 1) , 0 , Mathf.Infinity), 0 , Mathf.Clamp(_rigidbody.velocity.z, -1, 1));
                 _rigidbody.AddForce(movementDirection * Speed);
             }
 
@@ -104,6 +106,20 @@ namespace RollingBall
             }
             transform.localScale = startScale;
             StopCoroutine(Teleport());
+        }
+
+        public void BoostSpeed(float duration, float speedMultiplier)
+        {
+            StartCoroutine(SpeedBoost(duration, speedMultiplier));
+        }
+        private IEnumerator SpeedBoost(float duration , float speedMultiplier)
+        {
+            print(Speed);
+            float startSpeed = Speed;
+            Speed *= speedMultiplier;
+            print(Speed);
+            yield return new WaitForSeconds(duration);
+            Speed = startSpeed;
         }
     }
 

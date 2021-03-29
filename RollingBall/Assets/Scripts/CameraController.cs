@@ -1,31 +1,34 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace RollingBall
 {
-    internal class CameraController : MonoBehaviour
+    public class CameraController : IExecute
     {
-        [SerializeField] private Transform _followTarget;
+        private Transform _followTarget;
+        private Transform _mainCamera;
         [SerializeField] private float rotationSpeed = 5;
         [SerializeField] private float _speed = 0.08f;
         [SerializeField] private bool shake;
         private Vector3 _smoothedPlayerPosition;
         private Vector3 _offset;
 
-    /*    //      WALL RUN
-        public bool isWallRunning;
-        public float cameraTiltZ;
-        
-        private float cameraTilt; 
-        //*/
-
-        private void Start()
+        public CameraController(Transform player, Transform mainCamera)
         {
-            Cursor.visible = false;
+            _followTarget = player;
+            _mainCamera = mainCamera;
+            _offset = mainCamera.transform.position - _followTarget.position;
+            _mainCamera.LookAt(_followTarget);
 
-            _offset = transform.position - _followTarget.position;
+            _offset = _mainCamera.position - _followTarget.position;
         }
 
+        public void Execute()
+        {
+            _smoothedPlayerPosition = Vector3.Slerp(_smoothedPlayerPosition, _followTarget.position, _speed);
+            _mainCamera.transform.position = _smoothedPlayerPosition + _offset;
+        }
+
+/*
         private void LateUpdate()
         {
             #region Mouse Rotate
@@ -45,7 +48,7 @@ namespace RollingBall
             #endregion
         }
 
-        private void FixedUpdate()
+       *//* private void FixedUpdate()
         {
 
             if (shake)
@@ -54,16 +57,6 @@ namespace RollingBall
                 StartCoroutine(CameraShake(0.3f, 0.06f));
             }
 
-            /*if (isWallRunning)
-            {
-                cameraTilt = Mathf.Lerp(cameraTilt, cameraTiltZ , 0.1f);
-                transform.rotation = Quaternion.Euler(new Vector3(cameraRotation.x, cameraRotation.y, cameraRotation.z + cameraTilt));
-            }
-            else
-            {
-                cameraTilt = Mathf.Lerp(cameraTilt, cameraRotation.z, 0.1f);
-                transform.rotation = Quaternion.Euler(new Vector3(cameraRotation.x, cameraRotation.y, cameraRotation.z + cameraTilt));
-            }*/
         }
 
         public IEnumerator CameraShake(float duration , float magnitude)
@@ -86,11 +79,12 @@ namespace RollingBall
 
             transform.localPosition = startPosition;
             StopCoroutine(CameraShake(0 , 0));
-        }
+        }*/
 
         public void ChangeFollowTarget(Transform target)
         {
             _followTarget = target;
         }
+
     }
 }

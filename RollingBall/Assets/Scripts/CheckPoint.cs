@@ -16,7 +16,7 @@ namespace RollingBall
             {
                 _isActive = false;
                 _plate.GetComponent<MeshRenderer>().material = _disabled;
-                other.GetComponent<PlayerBall>().ChangeCheckPoint(transform);
+                //other.GetComponent<PlayerBall>().ChangeCheckPoint(transform);
                 StartCoroutine(PlatePressDown());
             }
         }
