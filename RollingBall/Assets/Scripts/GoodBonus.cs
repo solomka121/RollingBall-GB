@@ -31,9 +31,8 @@ namespace RollingBall
         protected override void Interaction(Collider other)
         {
             print(other.name);
-            _displayBonuses.Display(5);
+            OnPointChange.Invoke(5);
             //other.GetComponent<PlayerBall>().BoostSpeed(_speedBoostDuration, _speedMultiplayer);
-            
         }
 
         public void Fly()

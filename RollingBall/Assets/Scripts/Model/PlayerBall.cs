@@ -2,10 +2,9 @@
 
 namespace RollingBall
 {
-    public class PlayerBall : PlayerBase , IInteractable
+    public class PlayerBall : PlayerBase
     {
         private Rigidbody _rigidbody;
-        public bool IsInteractable { get; } = true;
 
         private void Start()
         {

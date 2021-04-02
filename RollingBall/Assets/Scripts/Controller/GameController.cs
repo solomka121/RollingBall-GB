@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
@@ -13,7 +14,6 @@ namespace RollingBall
         private CameraController _cameraController;
         private InputController _inputController;
         private int _countBonuses;
-
         private Reference _reference;
 
         private void Awake()
@@ -39,7 +39,8 @@ namespace RollingBall
             {
                 if (o is GoodBonus goodBonus)
                 {
-                    goodBonus.OnPointChange += AddBonuse;
+                    goodBonus.OnPointChange += AddBonus;
+                    goodBonus.OnPointChange += ShakeCamera;
                 }
             }
 
@@ -63,7 +64,13 @@ namespace RollingBall
 
             }
         }
-        private void AddBonuse(int value)
+
+        private void ShakeCamera(int i)
+        {
+            StartCoroutine(_cameraController.CameraShake(0.3f, 0.06f));
+        }
+
+        private void AddBonus(int value)
         {
             _countBonuses += value;
             _displayBonuses.Display(_countBonuses);
@@ -81,7 +88,8 @@ namespace RollingBall
             {
                 if (o is GoodBonus goodBonus)
                 {
-                    goodBonus.OnPointChange -= AddBonuse;
+                    goodBonus.OnPointChange -= AddBonus;
+                    goodBonus.OnPointChange -= ShakeCamera;
                 }
             }
         }
