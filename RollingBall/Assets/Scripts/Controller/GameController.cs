@@ -9,16 +9,19 @@ namespace RollingBall
     public sealed class GameController : MonoBehaviour
     {
         public PlayerType PlayerType = PlayerType.Ball;
+        private ListActionObject _listActionObject;
         private ListExecuteObject _interactiveObject;
         private DisplayBonuses _displayBonuses;
         private CameraController _cameraController;
         private InputController _inputController;
+        private MiniMapController _miniMapController;
         private int _countBonuses;
         private Reference _reference;
 
         private void Awake()
         {
             _interactiveObject = new ListExecuteObject();
+            _listActionObject = new ListActionObject();
 
             _reference = new Reference();
 
@@ -34,6 +37,11 @@ namespace RollingBall
             _inputController = new InputController(player);
             _interactiveObject.AddExecuteObject(_inputController);
 
+            var miniMapView = _reference.MiniMapCamera.GetComponent<MiniMapView>();
+            _miniMapController = new MiniMapController( miniMapView , player.transform);
+            _interactiveObject.AddExecuteObject(_miniMapController);
+            _listActionObject.AddActionObject(_miniMapController);
+
             _displayBonuses = new DisplayBonuses(_reference.Bonus);
             foreach (var o in _interactiveObject)
             {
@@ -47,6 +55,22 @@ namespace RollingBall
             _reference.MainMenuButton.onClick.AddListener(LoadMainMenu);
             _reference.MainMenuButton.gameObject.SetActive(false);
 
+        }
+
+        private void Start()
+        {
+            for (var i = 0; i < _listActionObject.Length; i++)
+            {
+                var listActionObject = _listActionObject[i];
+
+                if (listActionObject == null)
+                {
+                    continue;
+                }
+
+                listActionObject.Action();
+
+            }
         }
 
         private void Update()

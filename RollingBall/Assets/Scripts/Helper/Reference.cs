@@ -7,6 +7,7 @@ namespace RollingBall
     {
         private PlayerBall _playerBall;
         private Camera _mainCamera;
+        private GameObject _miniMapCamera;
         private Button _mainMenuButton;
         private GameObject _bonus;
         private Canvas _canvas;
@@ -75,6 +76,19 @@ namespace RollingBall
                     _mainCamera = Camera.main;
                 }
                 return _mainCamera;
+            }
+        }
+
+        public GameObject MiniMapCamera
+        {
+            get
+            {
+                if (_miniMapCamera == null)
+                {
+                    var gameObject = Resources.Load<GameObject>("MiniMap/MiniMapCamera");
+                    _miniMapCamera = Object.Instantiate(gameObject);
+                }
+                return _miniMapCamera;
             }
         }
     }
